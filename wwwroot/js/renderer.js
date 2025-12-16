@@ -33,15 +33,36 @@ export function renderDisplay() {
 
     switch (data.currentState) {
         case STATES.LOCKED_CODE_INPUT: {
+            // Die maximale Länge des Codes ist wichtig für die Platzhalter.
+            const maxCodeLength = data.maxCodeLength;
+            // Die bereits eingegebene Länge
+            const inputLength = data.currentCodeInput.length;
+
             // ANZEIGE FÜR PASSWORT-EINGABE
-            let displayLine2 = hours + ':' + minutes + '.' + seconds + ' ';
-            // Zeichen vor Cursor
+            const spacing = ' '.repeat(4);
+            let displayLine2 = hours + ':' + minutes + '.' + seconds + spacing;
+
+            // 1. Die bereits eingegebenen Zeichen (z.B. "****") hinzufügen
             displayLine2 += data.currentCodeInput;
-            // Blinkender Cursor
-            if (data.currentCodeInput.length < data.correctCode.length) {
+
+            // 2. Den blinkenden Cursor hinzufügen
+            if (inputLength < maxCodeLength) {
                 displayLine2 += '<span class="cursor">█</span>';
-                displayLine2 += '...'; // Drei Punkte
+
+                // 3. Die festen Platzhalterpunkte hinzufügen.
+                // Wir benötigen die Anzahl der verbleibenden Zeichen abzüglich des Cursors (der 1 Zeichen belegt).
+                const remainingLength = maxCodeLength - inputLength - 1; // -1 für den Cursor
+
+                // Wir fügen nur dann Punkte hinzu, wenn noch Platz ist (remainingLength > 0).
+                if (remainingLength > 0) {
+                    // Beispiel: Wenn remainingLength 3 ist, fügen wir 3 Punkte hinzu.
+                    displayLine2 += '.'.repeat(remainingLength);
+                }
             }
+
+            // Falls der Code bereits vollständig eingegeben wurde (inputLength === maxCodeLength),
+            // wird kein Cursor und keine Punkte mehr hinzugefügt, da die if-Bedingung fehlschlägt.
+
             displayScreen.innerHTML = `
                 <div class="display-line">${germanWeekday} ${day}-${month}-${year} CODE</div>
                 <div class="display-line">${displayLine2}</div>
@@ -184,16 +205,7 @@ export function renderStatusOverlay() {
     ).join('');
 
     statusContent.innerHTML = `
-        <h3>SIMULIERTER GLOCKENSTUHL-STATUS</h3>
         ${bellStatusHtml}
-        <div class="status-line" style="border-top: 1px dashed #405a6b; padding-top: 5px; margin-top: 5px;">
-            <span>Uhr-Korrektur:</span>
-            <span class="status-value ${systemState.mainClock === 'AKTIV' ? 'on' : 'off'}">${systemState.mainClock}</span>
-        </div>
-        <div class="status-line">
-            <span>Automatik:</span>
-            <span class="status-value ${systemState.automation === 'AKTIV' ? 'on' : 'off'}">${systemState.automation}</span>
-        </div>
 
         <h3>AKTIVE PROGRAMME (${data.savedPrograms.length} gesp.)</h3>
         ${programHtml}

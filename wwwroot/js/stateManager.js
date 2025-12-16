@@ -25,6 +25,7 @@ export let currentState = STATES.LOCKED_CODE_INPUT;
 export let currentPath = [];
 export let currentIndex = 0;
 export const correctCode = "123";
+export const maxCodeLength = 4;
 export let currentCodeInput = "";
 
 // Variablen für die Programm-Eingabe
@@ -41,7 +42,7 @@ export let savedPrograms = [{
     Ende: "0745",
     Tage: "7"
 }];
-export const availableMelodies = ["Westminster", "Großer Choral", "Engel Läuten", "Salve Regina", "Ave Maria"];
+export const availableMelodies = ["Melodie 1", "Melodie 2", "..."];
 
 // System-Status
 export let systemState = {
@@ -73,6 +74,7 @@ export const getData = () => ({
     menuData,
     programSteps,
     correctCode,
+    maxCodeLength,
     availableMelodies
 });
 

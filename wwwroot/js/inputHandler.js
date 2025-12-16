@@ -155,7 +155,7 @@ export function handleInput(key) {
     if (data.currentState === STATES.LOCKED_CODE_INPUT) {
         const isDigit = !isNaN(parseInt(key)) && key.length === 1;
 
-        if (isDigit && data.currentCodeInput.length < data.correctCode.length) {
+        if (isDigit && data.currentCodeInput.length < data.maxCodeLength) {
             setCurrentCodeInput(data.currentCodeInput + key);
         } else if (key === 'ENTER') {
             if (data.currentCodeInput === data.correctCode) {
