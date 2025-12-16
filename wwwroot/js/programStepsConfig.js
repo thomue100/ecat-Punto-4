@@ -21,7 +21,7 @@ const TIME_INPUT_STEP = (key, line1Prefix) => ({
             if (m === '__') return `${h}:__`;
             if (m.length === 1) return `${h}:${m}_`;
             if (m.length === 2) return `${h}:${m}`;
-            return `${h}:${m}`;
+            return `${h}:${m}`; s
         });
     },
 });

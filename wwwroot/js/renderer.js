@@ -5,7 +5,7 @@ import { getCurrentMenu, getCurrentMenuName, getProgramStepConfig } from './inpu
 
 const displayScreen = document.getElementById('display-screen');
 const statusContent = document.getElementById('status-content');
-const maxChars = 30; // Maximale Zeichenbreite des Displays
+const maxChars = 20; // Maximale Zeichenbreite des Displays
 
 /**
  * Gibt den deutschen Wochentag zurück.
@@ -53,7 +53,7 @@ export function renderDisplay() {
             const spacing = ' '.repeat(5);
             displayScreen.innerHTML = `
                 <div class="display-line">${germanWeekday} ${day}-${month}-${year} PROGRAMM</div>
-                <div class="display-line">${hours}:${minutes}.${seconds}${spacing}---</div>
+                <div class="display-line">${hours}:${minutes}.${seconds}${spacing}</div>
             `;
             break;
         }
