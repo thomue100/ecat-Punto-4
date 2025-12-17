@@ -185,29 +185,31 @@ export function renderStatusOverlay() {
 
     let programHtml = '';
     if (data.savedPrograms.length > 0) {
-        const p = data.savedPrograms[data.savedPrograms.length - 1];
-        let dauerStr;
-        let isEndeZeit = (parseInt(p.Dauer) === 0);
-        if (isEndeZeit && p.Ende) {
-            dauerStr = `Ende: ${p.Ende.substring(0, 2)}:${p.Ende.substring(2, 4)}`;
-        } else {
-            dauerStr = `Dauer: ${parseInt(p.Dauer)}s`;
-        }
+        // Sicherstellen, dass der Index im validen Bereich liegt
+        const viewIdx = Math.max(0, Math.min(data.statusProgramIndex, data.savedPrograms.length - 1));
+        const p = data.savedPrograms[viewIdx];
+
+        let dauerStr = (parseInt(p.Dauer) === 0 && p.Ende)
+            ? `Ende: ${p.Ende.substring(0, 2)}:${p.Ende.substring(2, 4)}`
+            : `Dauer: ${parseInt(p.Dauer)}s`;
 
         const tagMap = { "0": "Täglich", "1": "Mo", "2": "Di", "3": "Mi", "4": "Do", "5": "Fr", "6": "Sa", "7": "So" };
         const tagStr = tagMap[p.Tage] || `Tag: ${p.Tage}`;
 
-        const programType = (data.savedPrograms.length === 1 && p.Glocken === "1-3" && p.Ende === "0745" && p.Tage === "7") ? "(Beispiel)" : "(Letztes)";
-
         programHtml = `
-            <div class="status-line" style="margin-top: 5px;"><span>Programm ${programType}:</span><span class="status-value"></span></div>
+            <div class="status-line" style="margin-top: 5px; justify-content: space-between; display: flex; align-items: center;">
+                <span>Prog. <b>${p.Nr}</b> (${viewIdx + 1}/${data.savedPrograms.length}):</span>
+                <div class="scroll-controls">
+                    <button id="prev-prog" style="padding: 0 5px; cursor: pointer;">↑</button>
+                    <button id="next-prog" style="padding: 0 5px; cursor: pointer;">↓</button>
+                </div>
+            </div>
             <div class="status-line"><span>Glocken:</span><span class="status-value">${p.Glocken}</span></div>
             <div class="status-line"><span>${dauerStr}</span><span class="status-value">${tagStr}</span></div>
         `;
     } else {
         programHtml = `<div class="status-line"><span>(Keine Programme gespeichert)</span></div>`;
     }
-
     const melodyHtml = data.availableMelodies.map(m =>
         `<div class="status-line"><span>- ${m}</span></div>`
     ).join('');
@@ -221,4 +223,26 @@ export function renderStatusOverlay() {
         <h3 style="margin-top: 10px;">VERFÜGBARE MELODIEN</h3>
         ${melodyHtml}
     `;
+    // Event-Listener für die Scroll-Buttons in der Statusanzeige
+    const btnPrev = document.getElementById('prev-prog');
+    const btnNext = document.getElementById('next-prog');
+
+    if (btnPrev) {
+        btnPrev.onclick = (e) => {
+            e.stopPropagation();
+            import('./stateManager.js').then(m => {
+                m.setStatusProgramIndex(Math.max(0, data.statusProgramIndex - 1));
+                renderStatusOverlay();
+            });
+        };
+    }
+    if (btnNext) {
+        btnNext.onclick = (e) => {
+            e.stopPropagation();
+            import('./stateManager.js').then(m => {
+                m.setStatusProgramIndex(Math.min(data.savedPrograms.length - 1, data.statusProgramIndex + 1));
+                renderStatusOverlay();
+            });
+        };
+    }
 }

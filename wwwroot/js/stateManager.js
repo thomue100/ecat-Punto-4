@@ -28,6 +28,8 @@ export const correctCode = "123";
 export const maxCodeLength = 4;
 export let currentCodeInput = "";
 
+export let statusProgramIndex = 0; // Index für das Blättern in der Statusanzeige
+
 // Variablen für die Programm-Eingabe
 export let programSteps = PROGRAM_STEPS_CONFIG.STUNDENSCHLAGEN;
 export let programStepIndex = 0;
@@ -80,6 +82,7 @@ export let savedPrograms = loadInitialPrograms();
 
 export const getData = () => ({
     currentState,
+    statusProgramIndex,
     currentPath,
     currentIndex,
     currentCodeInput,
@@ -177,6 +180,10 @@ export const setSystemStateBell = (key, value) => {
 
 export const setSystemStateAutomation = (value) => {
     systemState.automation = value;
+};
+
+export const setStatusProgramIndex = (index) => {
+    statusProgramIndex = index;
 };
 
 export const resetAllState = () => {
