@@ -115,34 +115,30 @@ export function renderDisplay() {
                 //line1 = "W2"; // <-- Geändert: Platzhalter für nächstes freies Programm
                 //line2 = "    ESC DRÜCKEN"; // <-- Beibehalten
             } else {
-                // Prompt des aktuellen Schritts (z.B. "Glocken: 1-3") kommt in Zeile 2
-                line2 = step.line2 || "    "; // Wenn step.line2 existiert, verwende es als Prompt
+                line2 = step.line2 || "    ";
 
-                // Zeile 1: Der Prompt des aktuellen Schritts (mit Underscores, z.B. "START: ____")
-                let rawLine1 = step.line1;
+                // 1. Bestimme die aktuelle Programmnummer (W + Anzahl + 1)
+                const currentProgNr = `W${data.savedPrograms.length + 1}`;
+
+                // 2. Ersetze den Platzhalter {Nr} im Konfigurations-String
+                let rawLine1 = step.line1.replace(/{Nr}/g, currentProgNr);
+
                 let currentInput = data.currentInput;
-
                 let displayLine1 = rawLine1;
-                let charIndex = 0; // Index des Zeichens in rawLine1
+                let charIndex = 0;
 
-                // Durchlaufe die rawLine1 (Prompt mit Underscores)
+                // Durchlaufe die rawLine1 (jetzt mit korrekter W-Nummer)
                 for (let i = 0; i < rawLine1.length; i++) {
                     if (rawLine1[i] === '_') {
-                        // Wenn wir an einem Underscore sind, überprüfen wir, ob bereits ein Zeichen eingegeben wurde
                         if (charIndex < currentInput.length) {
-                            // Ersetze Underscore durch bereits eingegebenes Zeichen
                             displayLine1 = displayLine1.substring(0, i) + currentInput[charIndex] + displayLine1.substring(i + 1);
                             charIndex++;
                         } else if (charIndex === currentInput.length) {
-                            // Dies ist die Position des nächsten einzugebenden Zeichens
-                            // Ersetze Underscore durch blinkenden Cursor
                             displayLine1 = displayLine1.substring(0, i) + '<span class="cursor">█</span>' + displayLine1.substring(i + 1);
                             charIndex++;
                         }
-                        // Wenn charIndex > currentInput.length, bleibt es ein Underscore
                     }
                 }
-
                 line1 = displayLine1;
             }
 

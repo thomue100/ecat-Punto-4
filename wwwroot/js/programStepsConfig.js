@@ -45,7 +45,8 @@ export const PROGRAM_STEPS_CONFIG = {
     STUNDENSCHLAGEN: [
         {
             key: "Dauer",
-            line1: "W1 DAUER:__sek",
+            // {Nr} dient als Platzhalter für "W1", "W2" etc.
+            line1: "{Nr} DAUER:__sek",
             line2: "0 FUER ANFANG-ENDE",
             validator: (input) => /^\d{0,2}$/.test(input),
             maxLength: 2,
@@ -54,12 +55,9 @@ export const PROGRAM_STEPS_CONFIG = {
             nextStepIfZero: "Ende",
             nextStepIfNonZero: "Beginn"
         },
-        // Verwendung des wiederverwendbaren TIME_INPUT_STEP
-        { ...TIME_INPUT_STEP("Beginn", "W1 BEGINNSTUN."), nextStep: "Ende" },
-        // Verwendung des wiederverwendbaren TIME_INPUT_STEP
-        { ...TIME_INPUT_STEP("Ende", "W1 ENDESTUNDE:"), nextStep: "Tage" },
-        // Verwendung des wiederverwendbaren DAYS_INPUT_STEP
-        { ...DAYS_INPUT_STEP, line1: "W1 ETAG:_" }
+        { ...TIME_INPUT_STEP("Beginn", "{Nr} BEGINNSTUN."), nextStep: "Ende" },
+        { ...TIME_INPUT_STEP("Ende", "{Nr} ENDESTUNDE:"), nextStep: "Tage" },
+        { ...DAYS_INPUT_STEP, line1: "{Nr} ETAG:_" }
     ],
 
     // HIER KÖNNTEN SIE ZUKÜNFTIG ANDERE PROGRAMME MIT WIEDERVERWENDBAREN BLÖCKEN HINZUFÜGEN
