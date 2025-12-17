@@ -99,13 +99,21 @@ export function renderDisplay() {
             let line2 = ""; // Promptzeile
 
             const step = getProgramStepConfig(data);
+            const displayScreen = document.getElementById('display-screen');
 
             if (!step) {
-                // Programmierung abgeschlossen (oder Fehler) - GEÄNDERTE LOGIK FÜR W2-ANZEIGE
-                // line1 = "W1 PROGRAMMIERUNG ABGESCHL.  "; // <-- Original
-                // line2 = "    ESC DRÜCKEN"; // <-- Original
-                line1 = "W2"; // <-- Geändert: Platzhalter für nächstes freies Programm
-                line2 = "    ESC DRÜCKEN"; // <-- Beibehalten
+                // Dieser Block wird angezeigt, wenn das Programm gespeichert wurde
+                // Wir holen uns das zuletzt gespeicherte Programm aus dem State
+                const lastProgram = data.savedPrograms[data.savedPrograms.length - 1];
+                const assignedNr = lastProgram ? lastProgram.Nr : "??";
+
+                displayScreen.innerHTML = `
+                 <div class="display-line">NR: ${assignedNr} GESPEICHERT</div>
+                 <div class="display-line">ESC -> MENÜ</div>
+                `;
+                return;
+                //line1 = "W2"; // <-- Geändert: Platzhalter für nächstes freies Programm
+                //line2 = "    ESC DRÜCKEN"; // <-- Beibehalten
             } else {
                 // Prompt des aktuellen Schritts (z.B. "Glocken: 1-3") kommt in Zeile 2
                 line2 = step.line2 || "    "; // Wenn step.line2 existiert, verwende es als Prompt

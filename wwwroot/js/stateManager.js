@@ -36,12 +36,7 @@ export let secFuncActive = false;
 export let programData = {};
 
 // Persistente Datenstrukturen
-export let savedPrograms = [{
-    Glocken: "1-3",
-    Dauer: "00",
-    Ende: "0745",
-    Tage: "7"
-}];
+
 export const availableMelodies = ["Melodie 1", "Melodie 2", "..."];
 
 // System-Status
@@ -55,6 +50,29 @@ export let systemState = {
         bell4: false
     }
 };
+
+// --- HILFSFUNKTIONEN FÜR PERSISTENZ ---
+
+// Wenn man die Liste während des Testens wieder leeren möchte, kann man einfach die 
+// Browser - Konsole(F12) öffnen und folgenden Befehl eingeben: 
+//localStorage.clear(); location.reload();
+
+const STORAGE_KEY = 'bell_system_programs';
+
+const loadInitialPrograms = () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        try {
+            return JSON.parse(saved);
+        } catch (e) {
+            console.error("Fehler beim Laden der Programme", e);
+        }
+    }
+    // Geändert: Jetzt mit einem leeren Array starten
+    return [];
+};
+
+export let savedPrograms = loadInitialPrograms();
 
 // =====================================================================
 // 3. GETTER und SETTER
@@ -114,9 +132,32 @@ export const setProgramDataValue = (key, value) => {
     programData[key] = value;
 };
 
+/**
+* Speichert ein neues Programm und weist ihm automatisch die nächste 
+* freie W-Nummer zu (W1 bis W99).
+*/
 export const pushProgram = (data) => {
-    savedPrograms.push(data);
+    // Wenn die Liste leer ist, wird nextNumber zu 1 (W1)
+    const nextNumber = savedPrograms.length + 1;
+
+    if (nextNumber <= 99) {
+        const newEntry = {
+            Nr: `W${nextNumber}`,
+            ...data
+        };
+        savedPrograms.push(newEntry); //
+
+        // In LocalStorage speichern
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedPrograms));
+
+        console.log("Programm gespeichert:", newEntry);
+        return newEntry.Nr;
+    } else {
+        console.warn("Limit von 99 Programmen erreicht.");
+        return null;
+    }
 };
+
 
 export const resetPath = () => {
     currentPath = [];
@@ -157,5 +198,6 @@ export const resetAllState = () => {
             bell4: false
         }
     };
+    // savedPrograms = []; // Falls die Liste bei STOP auch gelöscht werden soll
     programSteps = PROGRAM_STEPS_CONFIG.STUNDENSCHLAGEN;
 };

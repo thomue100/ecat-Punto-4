@@ -240,22 +240,28 @@ export function handleInput(key) {
             }
 
             if (step.isFinal) {
-                // Programm speichern
+                // 1. Kopie der gesammelten Daten erstellen
                 const programToSave = { ...data.programData };
+
+                // 2. Formatierung sicherstellen (z.B. Zeit vierstellig)
                 if (programToSave.Ende) {
                     programToSave.Ende = programToSave.Ende.padStart(4, '0').substring(0, 4);
                 }
+                if (programToSave.Beginn) {
+                    programToSave.Beginn = programToSave.Beginn.padStart(4, '0').substring(0, 4);
+                }
+
+                // 3. Speichern via stateManager (dort wird die "Nr" generiert)
                 pushProgram(programToSave);
+
                 resetProgramData();
 
-                // NEUE LOGIK: Setze programStepIndex höher, um in renderer.js den Fall !step zu triggern.
-                // Bleibe in PROGRAM_INPUT, um auf ESC zu warten (welches dann zurück ins Menü navigiert).
+                // Visualisierung des Abschlusses
                 setProgramStepIndex(data.programStepIndex + 1);
                 setCurrentState(STATES.PROGRAM_INPUT);
 
                 renderDisplay();
                 return;
-
             } else if (nextStepKey) {
                 const nextIndex = data.programSteps.findIndex(s => s.key === nextStepKey);
                 if (nextIndex !== -1) {
