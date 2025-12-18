@@ -10,64 +10,82 @@
         <h1>ecat PUNTO4 Trainer</h1>
 
         <div id="panel-container">
-            <div id="control-panel">
-                <div id="display-area">
-                    <button id="stecker-btn">
-                        <div class="pin-row">
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                        </div>
-                        <div class="pin-row lower-row">
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                            <span class="pin"></span>
-                        </div>
-                    </button>
+            <div id="left-column">
+                <div id="control-panel">
+                    <div id="display-area">
+                        <button id="stecker-btn">
+                            <div class="pin-row">
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                            </div>
+                            <div class="pin-row lower-row">
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                                <span class="pin"></span>
+                            </div>
+                        </button>
 
-                    <div id="display-logo">ecat<br>punto 4</div>
-                    <div id="display-screen"></div>
+                        <div id="display-logo">ecat<br>punto 4</div>
+                        <div id="display-screen"></div>
+                    </div>
+
+                    <div id="left-keys">
+                        <button class="f-key-btn" data-key="F1" style="grid-column: 1;">F1</button>
+                        <button class="f-key-btn" data-key="F2" style="grid-column: 2;">F2</button>
+                        <button class="f-key-btn" data-key="F3" style="grid-column: 3;">F3</button>
+                        <button class="f-key-btn" data-key="F4" style="grid-column: 4;">F4</button>
+
+                        <button class="f-key-btn" data-key="HAND1" style="grid-column: 1;"><span class="icon">✋</span></button>
+                        <button class="f-key-btn" data-key="HAND2" style="grid-column: 2;"><span class="icon">✋</span></button>
+                        <button class="f-key-btn" data-key="HAND3" style="grid-column: 3;"><span class="icon">✋</span></button>
+                        <button class="f-key-btn" data-key="HAND4" style="grid-column: 4;"><span class="icon">✋</span></button>
+
+                        <button id="stop-btn" data-key="STOP">STOP</button>
+                    </div>
+
+                    <div id="right-keys">
+                        <button class="key-btn" data-key="1">1</button>
+                        <button class="key-btn" data-key="2">2</button>
+                        <button class="key-btn" data-key="3">3</button>
+                        <button class="key-btn" data-key="MINUS">-</button>
+
+                        <button class="key-btn" data-key="4">4</button>
+                        <button class="key-btn" data-key="5">5</button>
+                        <button class="key-btn" data-key="6">6</button>
+                        <button class="key-btn" data-key="PLUS">+</button>
+
+                        <button class="key-btn" data-key="7">7</button>
+                        <button class="key-btn" data-key="8">8</button>
+                        <button class="key-btn" data-key="9">9</button>
+                        <button class="key-btn" data-key="ARROW_LEFT">←</button>
+
+                        <button class="key-btn" data-key="SEC_FUNC">sec.<br>func.</button>
+                        <button class="key-btn" data-key="ESC">ESC</button>
+                        <button class="key-btn" data-key="HELP">HELP</button>
+
+                        <button class="key-btn" data-key="0">0</button>
+                        <button class="key-btn" data-key="ENTER">↲</button>
+                    </div>
                 </div>
 
-                <div id="left-keys">
-                    <button class="f-key-btn" data-key="F1" style="grid-column: 1;">F1</button>
-                    <button class="f-key-btn" data-key="F2" style="grid-column: 2;">F2</button>
-                    <button class="f-key-btn" data-key="F3" style="grid-column: 3;">F3</button>
-                    <button class="f-key-btn" data-key="F4" style="grid-column: 4;">F4</button>
-
-                    <button class="f-key-btn" data-key="HAND1" style="grid-column: 1;"><span class="icon">✋</span></button>
-                    <button class="f-key-btn" data-key="HAND2" style="grid-column: 2;"><span class="icon">✋</span></button>
-                    <button class="f-key-btn" data-key="HAND3" style="grid-column: 3;"><span class="icon">✋</span></button>
-                    <button class="f-key-btn" data-key="HAND4" style="grid-column: 4;"><span class="icon">✋</span></button>
-
-                    <button id="stop-btn" data-key="STOP">STOP</button>
-                </div>
-
-                <div id="right-keys">
-                    <button class="key-btn" data-key="1">1</button>
-                    <button class="key-btn" data-key="2">2</button>
-                    <button class="key-btn" data-key="3">3</button>
-                    <button class="key-btn" data-key="MINUS">-</button>
-
-                    <button class="key-btn" data-key="4">4</button>
-                    <button class="key-btn" data-key="5">5</button>
-                    <button class="key-btn" data-key="6">6</button>
-                    <button class="key-btn" data-key="PLUS">+</button>
-
-                    <button class="key-btn" data-key="7">7</button>
-                    <button class="key-btn" data-key="8">8</button>
-                    <button class="key-btn" data-key="9">9</button>
-                    <button class="key-btn" data-key="ARROW_LEFT">←</button>
-
-                    <button class="key-btn" data-key="SEC_FUNC">sec.<br>func.</button>
-                    <button class="key-btn" data-key="ESC">ESC</button>
-                    <button class="key-btn" data-key="HELP">HELP</button>
-
-                    <button class="key-btn" data-key="0">0</button>
-                    <button class="key-btn" data-key="ENTER">↲</button>
+                <div id="exercise-container">
+                    <h3>ÜBUNGSAUFGABE "Stundenschlagen programmieren"</h3>
+                    <div id="exercise-list">
+                        <div class="exercise-item activ">Schritt 1: Gib den Code (das Passwort) "123" ein, um mit der Arbeit an den Programmen beginnen zu können.</div>
+                        <div class="exercise-item">Schritt 2: Aus dem Hauptmenue "PROGRAMMIERUNG" wählen und Eingabetaste ↵ druecken, um zu bestätigen.</div>
+                        <div class="exercise-item">Schritt 3: "EINGEBEN" über die Tasten "+" und "-" wählen und Eingabetaste ↵ drücken, um zu bestätigen</div>
+                        <div class="exercise-item">Schritt 4: "WOECHENTLICHE" über die Tasten "+" und "-" wählen und Eingabetaste ↵ drücken, um zu bestätigen.</div>
+                        <div class="exercise-item">Schritt 5: "STUNDENSCHLAGEN" über die Tasten "+" und "-" wählen, Eingabetaste ↵ drücken, um zu bestätigen.</div>
+                        <div class="exercise-item">Schritt 6: "0" eingeben und Eingabe ↵ drücken, um zu bestätigen</div>
+                        <div class="exercise-item">Schritt 7: Die Anfangsstunde (Stunden und Minuten) eingeben - wenn das STUNDENSCHLAGEN waehrend der Nacht nicht ausgeschlossen werden soll, 00 : 00 eingeben - und die Eingabe ↵ druecken, um zu bestaetigen.</div>
+                        <div class="exercise-item">Schritt 8: Wenn eine laengere Dauer gewaehlt wird, die Endestunde eingeben - wenn das STUNDENSCHLAGEN waehrend der Nacht nicht ausgeschlossen werden soll, 00 : 00 eingeben - und die Eingabe druecken, um zu bestaetigen.</div>
+                        <div class="exercise-item">Schritt 9: Tage (1=Montag, 7=Sonntag u.s.w.) eingeben - "0", wenn alle Tage eingesetzt werden sollen - und Eingabetaste ↵ drücken, um zu bestätigen.</div>
+                        <div class="exercise-item">Schritt 10: Am Schluss des Programmierens mehrere Male "ESC" druecken, um auszuspringen und zum Hauptmenue zurueckzukehren. (Dieses Programm kann nur verwendet werden, wenn mindestens ein Dienst aus dem Typenmenue programmiert wurde).</div>
+                    </div>
                 </div>
             </div>
 
@@ -79,6 +97,5 @@
     </div>
 
     <script type="module" src="./js/app.js"></script>
-
 </body>
 </html>
