@@ -11,7 +11,8 @@ body {
     /* NEU: Verhindert das Scrollen der gesamten Seite */
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     box-sizing: border-box;
 }
 
@@ -445,3 +446,24 @@ p {
         background-color: rgba(255, 204, 0, 0.1);
         font-weight: bold;
     }
+
+/* --- Media Query für kleinere Bildschirme --- */
+@media (max-width: 950px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+
+    #panel-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #status-overlay {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 600px; /* Gleiche Breite wie Control-Panel */
+        box-sizing: border-box;
+    }
+}
