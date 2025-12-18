@@ -140,19 +140,22 @@ export const setProgramDataValue = (key, value) => {
 * freie W-Nummer zu (W1 bis W99).
 */
 export const pushProgram = (data) => {
-    // Wenn die Liste leer ist, wird nextNumber zu 1 (W1)
     const nextNumber = savedPrograms.length + 1;
 
     if (nextNumber <= 99) {
+        // Wir suchen den Namen des aktuellen Programm-Sets aus der Config
+        const typeName = Object.keys(PROGRAM_STEPS_CONFIG).find(
+            key => PROGRAM_STEPS_CONFIG[key] === programSteps
+        ) || "UNBEKANNT";
+
         const newEntry = {
             Nr: `W${nextNumber}`,
+            Typ: typeName, // Speichert den Typ (z.B. STUNDENSCHLAGEN)
             ...data
         };
-        savedPrograms.push(newEntry); //
+        savedPrograms.push(newEntry);
 
-        // In LocalStorage speichern
         localStorage.setItem(STORAGE_KEY, JSON.stringify(savedPrograms));
-
         console.log("Programm gespeichert:", newEntry);
         return newEntry.Nr;
     } else {

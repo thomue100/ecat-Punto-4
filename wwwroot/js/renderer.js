@@ -168,6 +168,7 @@ export function renderStatusOverlay() {
     const data = getData();
     const systemState = data.systemState;
 
+    // 1. Glocken-Status HTML generieren
     const bellStatusHtml = Object.keys(systemState.bellState).map((key, index) => {
         const status = systemState.bellState[key] ? 'EIN' : 'AUS';
         const className = systemState.bellState[key] ? 'on' : 'off';
@@ -179,15 +180,22 @@ export function renderStatusOverlay() {
         `;
     }).join('');
 
+    // 2. Programm-Details HTML generieren
     let programHtml = '';
     if (data.savedPrograms.length > 0) {
         // Sicherstellen, dass der Index im validen Bereich liegt
         const viewIdx = Math.max(0, Math.min(data.statusProgramIndex, data.savedPrograms.length - 1));
         const p = data.savedPrograms[viewIdx];
 
-        let dauerStr = (parseInt(p.Dauer) === 0 && p.Ende)
+        // Logik für Dauer oder Endzeit
+        let zeitInfo = (parseInt(p.Dauer) === 0 && p.Ende)
             ? `Ende: ${p.Ende.substring(0, 2)}:${p.Ende.substring(2, 4)}`
             : `Dauer: ${parseInt(p.Dauer)}s`;
+
+        // Formatierung der Beginnzeit (HH:MM) oder "undefined"
+        const beginnStr = p.Beginn
+            ? `${p.Beginn.substring(0, 2)}:${p.Beginn.substring(2, 4)}`
+            : "undefined";
 
         const tagMap = { "0": "Täglich", "1": "Mo", "2": "Di", "3": "Mi", "4": "Do", "5": "Fr", "6": "Sa", "7": "So" };
         const tagStr = tagMap[p.Tage] || `Tag: ${p.Tage}`;
@@ -200,16 +208,21 @@ export function renderStatusOverlay() {
                     <button id="next-prog" style="padding: 0 5px; cursor: pointer;">↓</button>
                 </div>
             </div>
+            <div class="status-line"><span style="color: #00ff00;">Typ: ${p.Typ || 'UNBEKANNT'}</span></div>
             <div class="status-line"><span>Glocken:</span><span class="status-value">${p.Glocken}</span></div>
-            <div class="status-line"><span>${dauerStr}</span><span class="status-value">${tagStr}</span></div>
+            <div class="status-line"><span>Beginn: ${beginnStr}</span></div>
+            <div class="status-line"><span>${zeitInfo}</span><span class="status-value">${tagStr}</span></div>
         `;
     } else {
         programHtml = `<div class="status-line"><span>(Keine Programme gespeichert)</span></div>`;
     }
+
+    // 3. Melodien-Liste generieren
     const melodyHtml = data.availableMelodies.map(m =>
         `<div class="status-line"><span>- ${m}</span></div>`
     ).join('');
 
+    // 4. Gesamtes HTML in den Container schreiben
     statusContent.innerHTML = `
         ${bellStatusHtml}
 
@@ -219,7 +232,8 @@ export function renderStatusOverlay() {
         <h3 style="margin-top: 10px;">VERFÜGBARE MELODIEN</h3>
         ${melodyHtml}
     `;
-    // Event-Listener für die Scroll-Buttons in der Statusanzeige
+
+    // 5. Event-Listener für die Scroll-Buttons
     const btnPrev = document.getElementById('prev-prog');
     const btnNext = document.getElementById('next-prog');
 
