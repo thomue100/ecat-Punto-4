@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Glocken-Simulator: Zeitraffer & Stundenläuten</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .box {
+            background: #2a2a2a;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            position: relative;
+        }
+
+        .clock-display {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+            border: 2px solid #e67e22;
+        }
+
+        .bell-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .bell {
+            font-size: 48px;
+            opacity: 0.2;
+            transition: 0.2s;
+            transform-origin: top center;
+            text-align: center;
+        }
+
+            .bell.active {
+                opacity: 1;
+                color: #ffd700;
+                animation: swing 0.5s infinite alternate;
+            }
+
+        @keyframes swing {
+            from {
+                transform: rotate(-20deg);
+            }
+
+            to {
+                transform: rotate(20deg);
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-blue {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-green {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-orange {
+            background: #e67e22;
+            color: white;
+        }
+
+        .btn-gray {
+            background: #7f8c8d;
+            color: white;
+        }
+
+        select {
+            width: 100%;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 6px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        #log {
+            background: #000;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 11px;
+            color: #0f0;
+            height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            border: 1px solid #333;
+        }
+
+        .day-info {
+            text-align: center;
+            color: #e67e22;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="box">
+            <h3>🔔 Glocken & Programme</h3>
+            <div class="bell-row">
+                <div id="vis_bell1" class="bell">🔔<br><small>1</small></div>
+                <div id="vis_bell2" class="bell">🔔<br><small>2</small></div>
+                <div id="vis_bell3" class="bell">🔔<br><small>3</small></div>
+                <div id="vis_bell4" class="bell">🔔<br><small>4</small></div>
+            </div>
+            <button class="btn-blue" onclick="forceLoad()">Programme laden</button>
+            <button class="btn-green" onclick="createTestData()">Test-Daten (inkl. stündlich)</button>
+            <select id="progSelect" size="10"></select>
+        </div>
+
+        <div class="box">
+            <h3>⏩ Zeitraffer-Simulation</h3>
+            <div id="dayLabel" class="day-info">Montag</div>
+            <div class="clock-display" id="liveClock">00:00:00</div>
+
+            <button id="btnToggle" class="btn-green" onclick="toggleSimulation()">Simulation Starten</button>
+            <button class="btn-orange" onclick="resetSimulation()">Zurück auf Anfang (Mo 00:00)</button>
+
+            <div id="log">Status: Bereit.</div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'bell_system_programs';
+        let audioCtx = null;
+        let programsCache = [];
+        let alreadyTriggered = new Set();
+        let isRunning = false;
+        let simInterval = null;
+
+        const MS_PER_TICK = 50;
+        const SECONDS_PER_TICK = 432;
+        let currentSimDate = new Date(2025, 0, 6, 0, 0, 0);
+
+        function writeLog(msg) {
+            const log = document.getElementById('log');
+            log.innerText += `\n> ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function toggleSimulation() {
+            initAudio();
+            const btn = document.getElementById('btnToggle');
+            if (isRunning) {
+                clearInterval(simInterval);
+                btn.innerText = "Simulation fortsetzen";
+                btn.className = "btn-green";
+                isRunning = false;
+                writeLog("Simulation angehalten.");
+            } else {
+                simInterval = setInterval(updateSimulation, MS_PER_TICK);
+                btn.innerText = "Simulation Stop";
+                btn.className = "btn-gray";
+                isRunning = true;
+                writeLog("Simulation läuft...");
+            }
+        }
+
+        function updateSimulation() {
+            const lastTotalSeconds = currentSimDate.getHours() * 3600 + currentSimDate.getMinutes() * 60 + currentSimDate.getSeconds();
+            currentSimDate.setSeconds(currentSimDate.getSeconds() + SECONDS_PER_TICK);
+            const currentTotalSeconds = currentSimDate.getHours() * 3600 + currentSimDate.getMinutes() * 60 + currentSimDate.getSeconds();
+
+            const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+            document.getElementById('dayLabel').innerText = days[currentSimDate.getDay()];
+
+            const h = String(currentSimDate.getHours()).padStart(2, '0');
+            const m = String(currentSimDate.getMinutes()).padStart(2, '0');
+            const s = String(currentSimDate.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').innerText = `${h}:${m}:${s}`;
+
+            if (currentTotalSeconds < lastTotalSeconds) {
+                alreadyTriggered.clear();
+                writeLog("--- Neuer Tag ---");
+            }
+
+            checkSchedulerForSpan(lastTotalSeconds, currentTotalSeconds);
+        }
+
+        function checkSchedulerForSpan(startSec, endSec) {
+            const dayKey = currentSimDate.toDateString();
+
+            programsCache.forEach(p => {
+                // Wenn Beginn undefined ist, wird stündlich zur Minute 0 getriggert
+                const isHourly = (p.Beginn === undefined || p.Beginn === "" || p.Beginn === null);
+
+                if (isHourly) {
+                    // Prüfe für jede volle Stunde des Tages
+                    for (let hour = 0; hour < 24; hour++) {
+                        const hourlySec = hour * 3600;
+                        const triggerId = `${dayKey}_${p.Nr}_hour_${hour}`;
+
+                        if (hourlySec > startSec && hourlySec <= endSec && !alreadyTriggered.has(triggerId)) {
+                            alreadyTriggered.add(triggerId);
+                            playProgram(p, `Stundenläuten ${hour}:00`);
+                        }
+                    }
+                } else {
+                    // Normaler Zeit-Trigger
+                    const [pHours, pMins] = p.Beginn.split(':').map(Number);
+                    const pTotalSec = pHours * 3600 + pMins * 60;
+                    const triggerId = `${dayKey}_${p.Nr}_${p.Beginn}`;
+
+                    if (pTotalSec > startSec && pTotalSec <= endSec && !alreadyTriggered.has(triggerId)) {
+                        alreadyTriggered.add(triggerId);
+                        playProgram(p);
+                    }
+                }
+            });
+        }
+
+        function resetSimulation() {
+            initAudio();
+            if (isRunning) toggleSimulation();
+            currentSimDate = new Date(2025, 0, 6, 0, 0, 0);
+            alreadyTriggered.clear();
+            document.getElementById('liveClock').innerText = "00:00:00";
+            document.getElementById('dayLabel').innerText = "Montag";
+            document.getElementById('btnToggle').innerText = "Simulation Starten";
+            writeLog("Simulation zurückgesetzt.");
+        }
+
+        function forceLoad() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            programsCache = raw ? JSON.parse(raw) : [];
+            const select = document.getElementById('progSelect');
+            select.innerHTML = "";
+            programsCache.forEach((p, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                const timeInfo = (p.Beginn === undefined || p.Beginn === "") ? "Stündlich" : p.Beginn;
+                opt.text = `${p.Nr} | ${timeInfo} | Glocke: ${p.Glocke || '1'}`;
+                select.appendChild(opt);
+            });
+            writeLog(programsCache.length + " Programme geladen.");
+        }
+
+        function playProgram(p, infoOverride) {
+            const g = p.Glocke || "1";
+            const bell = document.getElementById("vis_bell" + g);
+            const timeLabel = infoOverride || p.Beginn;
+            writeLog(`🔔 AKTIV: ${p.Nr} (${timeLabel})`);
+
+            if (bell) {
+                bell.classList.add("active");
+                beep(400 + (parseInt(g) * 50));
+                setTimeout(() => bell.classList.remove("active"), 800);
+            }
+        }
+
+        function createTestData() {
+            const test = [
+                { Nr: "Stundenschlag", Beginn: undefined, Glocke: "1" }, // undefined Test
+                { Nr: "Mittagsläuten", Beginn: "12:00", Glocke: "2" }
+            ];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(test));
+            forceLoad();
+            writeLog("Test-Daten erzeugt: Glocke 1 läutet nun jede volle Stunde.");
+        }
+
+        function beep(freq) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.frequency.value = freq;
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1);
+            } catch (e) { }
+        }
+
+        window.onload = forceLoad;
+    </script>
+</body>
+</html>

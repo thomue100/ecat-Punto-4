@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Master Control Board</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        /* Grid-Layout für die Miniaturansichten */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Container für das einzelne Programm */
+        .monitor-slot {
+            background: #222;
+            border: 2px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 250px;
+            transition: all 0.3s ease;
+        }
+
+        /* Die Miniaturisierung mittels Scaling */
+        .preview-wrapper {
+            width: 1200px; /* Originalbreite des Programms */
+            height: 800px; /* Originalhöhe */
+            transform: scale(0.25); /* Auf 25% verkleinern */
+            transform-origin: top left;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none; /* In der Miniansicht keine Klicks erlauben */
+        }
+
+        /* Vollbild-Modus Klasse */
+        .monitor-slot.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            border: none;
+        }
+
+            .monitor-slot.fullscreen .preview-wrapper {
+                transform: scale(1);
+                width: 100%;
+                height: 100%;
+            }
+
+            .monitor-slot.fullscreen iframe {
+                pointer-events: auto; /* Klicks im Vollbild wieder erlauben */
+            }
+
+        /* Beschriftung und Button */
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        button {
+            background: #e67e22;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Global Monitoring Board</h1>
+
+    <div class="dashboard">
+        <div class="monitor-slot" id="slot1">
+            <div class="preview-wrapper">
+                <iframe src="Glockentest.html"></iframe>
+            </div>
+            <div class="overlay">
+                <span>Glocken-Simulator A</span>
+                <button onclick="toggleZoom('slot1')">Vergrößern</button>
+            </div>
+        </div>
+
+        <div class="monitor-slot" id="slot2">
+            <div class="preview-wrapper">
+                <iframe src="Glockentest.html"></iframe>
+            </div>
+            <div class="overlay">
+                <span>Glocken-Simulator B (Backup)</span>
+                <button onclick="toggleZoom('slot2')">Vergrößern</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleZoom(id) {
+            const slot = document.getElementById(id);
+            const btn = slot.querySelector('button');
+
+            if (slot.classList.contains('fullscreen')) {
+                slot.classList.remove('fullscreen');
+                btn.innerText = "Vergrößern";
+            } else {
+                slot.classList.add('fullscreen');
+                btn.innerText = "Schließen";
+            }
+        }
+    </script>
+</body>
+</html>
