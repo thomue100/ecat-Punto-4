@@ -1,0 +1,98 @@
+HAUPTMENU
+	1/7) PROGRAMMIERUNG
+		"1/3) EINGEBEN"
+			"1/5) WOECHENTLICH"
+				"1/4) GLOCKEN"
+				"2/4) MELODIEN"
+				"3/4) STUNDENSCHLAGEN"
+				"4/4) DIENSTE"
+			"2/5) PERIODISCH"
+				"1/4) GLOCKEN"
+				"2/4) MELODIEN"
+				"3/4) STUNDENSCHLAGEN"
+				"4/4) DIENSTE"
+			"3/5) BESONDERE"
+				"1/4) GLOCKEN"
+				"2/4) MELODIEN"
+				"3/4) STUNDENSCHLAGEN"
+				"4/4) DIENSTE"
+			"4/5) ZYKLISCH"
+				"1/3) GLOCKEN"
+				"2/3) MELODIEN"
+				"3/3) DIENSTE"
+			"5/5) UNTERDRUECKEN"
+				"1/4) GLOCKEN"
+				"2/4) MELODIEN"
+				"3/4) STUNDENSCHLAGEN"
+				"4/4) DIENSTE"
+		"2/3) LESEN"
+			"1/5) WOECHENTLICH"
+			"2/5) PERIODISCH"
+			"3/5) BESONDERE"
+			"4/5) ZYKLISCH"
+			"5/5) UNTERDRUECKEN"
+		"3/3) LOESCHEN"
+			"1/5) WOECHENTLICH"
+			"2/5) PERIODISCH"
+			"3/5) BESONDERE"
+			"4/5) ZYKLISCH"
+			"5/5) UNTERDRUECKEN"
+	2/7) UHR KORRIGIEREN
+	3/7) SEK. KORRIGIEREN
+	4/7) TURMUHR KORRIG.
+	5/7) SOMMERZEIT
+		1/4) NICHT VORHANDEN
+		2/4) UEBER RADIDO
+		3/4) NORMAL
+		4/4) FESTES DATUM
+	6/7) MELOD. SPEICHERN
+	7/7) NAME DER MELODI.
+
+## 🔴 **Hohe Priorität – Grundfunktion & Stabilität**
+
+1. **Speicher- und Datenkonzept klären**
+   Die „Speicherobjekte“ noch einmal grundlegend überprüfen und sauber definieren:
+   *Was wird wann, wo und in welcher Struktur gespeichert?*
+   → Basis für viele weitere Funktionen.
+
+2. **Texte im Display prüfen (Lesen & Löschen)**
+   Sicherstellen, dass alle Displaytexte korrekt angezeigt und zuverlässig gelöscht werden.
+
+3. **Reset-Funktion implementieren**
+   Reset durch gleichzeitiges Drücken von vier Tasten korrekt programmieren.
+
+## 🟠 **Mittlere Priorität – Bedienlogik & Funktionen**
+
+4. **Overlays korrekt schließen**
+   Overlays sollen immer geschlossen werden können, wenn außerhalb geklickt wird (Soll-Zustand sicherstellen).
+
+5. **Handtasten mit Funktionen belegen**
+   Klare Zuordnung und Implementierung der Handtasten.
+
+6. **Melodien über Tasten abspielen**
+
+    * F1–F4 → Melodien 1–4
+    * SEC.FUNC. + 5–8 → Melodien 5–8
+
+7. **Eingabelogik für Melodiennummern verbessern**
+    Mit Backspace wieder zum blinkenden Cursor zurückkehren können.
+
+8. ** Die Handtasten sind noch ohne Funktion
+
+9. **Hilfetexte überarbeiten und präzisieren**
+    Inhalte an den tatsächlichen Funktionsumfang anpassen.
+
+10. **Zweisprachigkeit herstellen**
+    Struktur für Mehrsprachigkeit schaffen (DE / ggf. IT oder EN).
+
+11. **Tests erweitern**
+    Bestehende Tests ausbauen, insbesondere für Speicherlogik und Eingaben.
+
+## 📘 **Wichtig & begleitend (nicht vergessen!)**
+
+* **Unbedingt die italienische Anleitung und das YouTube-Transkript lesen**
+  Dort finden sich offenbar zusätzliche oder präzisere Informationen, die
+
+  * in der deutschen Anleitung fehlen
+  * oder missverständlich formuliert sind
+    → Erkenntnisse direkt in Logik, Texte und Tests einfließen lassen.

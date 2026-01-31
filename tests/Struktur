@@ -1,0 +1,13 @@
+tests/
+├── auth/
+│   └── login.spec.js          # Login-Logik (Code-Eingabe 123)
+├── e2e/
+│   ├── navigation.spec.js     # Durchlaufen der Menüpfade (Breadcrumbs)
+│   ├── programming.spec.js    # Testet W/P/B/Z/U Programmeingaben
+│   └── commands.spec.js       # Uhr- & Turmuhrkorrektur
+├── functional/
+│   ├── melodies.spec.js       # Melodien aufnehmen & Namen editieren
+│   └── validation.spec.js     # Prüft Fehleingaben (z.B. 25:61 Uhr)
+└── utils/
+    ├── menu-navigator.js      # Helper, um Pfade wie [+, +, Enter] zu abstrahieren
+    └── constants.js           # Erwartete Display-Texte aus der menuData.js

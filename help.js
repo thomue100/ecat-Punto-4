@@ -1,0 +1,30 @@
+export const helpData = {
+  DEFAULT: [
+    "Nutzen Sie +/-, um zu navigieren",
+    "ENTER zum Bestätigen",
+    "ESC zum Zurückkehren",
+  ],
+  W_GLOCKEN: [
+    "Den Code „123“ eingeben und die Eingabetaste ⏎ drücken, bevor mit der Arbeit an den Programmen begonnen wird.",
+    "Aus dem Hauptmenü „PROGRAMMIERUNG“ wählen und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "„EINGEBEN“ über die Tasten „+“ und „-“ wählen und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "„WOECHENTLICHE“ über die Tasten „+“ und „-“ wählen und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "„GLOCKEN“ über die Tasten „+“ und „-“ wählen und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Von 1 bis 2 wählen, wenn 2 Glocken gespeichert sind oder von 1 bis 4, wenn 3 oder 4 Glocken programmiert sind; Eingabetaste ⏎ drücken, um zu bestätigen (wenn mehr Glocken gewählt werden sollen, nicht das Zeichen „+“ zwischen die einzelnen Glocken setzen).",
+    "Die Dauer (bis zu 99 Sekunden) eingeben; wenn eine Dauer von mehr als 99 Sek. gewünscht wird, „0“ eintasten und die Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Die Anfangsstunde eintasten (Stunden und Minuten) und die Eingabetaste ⏎ drücken, um zu bestätigen. Wenn eine längere Dauer gewählt wird, die Endestunde eingeben und die Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Tage (1=Montag, 7=Sonntag u.s.w.) eingeben - „0“, wenn alle Tage eingesetzt werden sollen - und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Es handelt sich hier um das PROGRAMMIERUNG Nr. ...; es können 99 Programmierungen vorgenommen werden;für den Aussprung „ESC“ „ESC“ drücken.",
+    "„2“ eintasten und Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Eingabetaste ⏎ drücken, um zu bestätigen.",
+    "Mit der Taste „+“ kann man, durch jeweils einen Tastendruck, zum naechsten Programm überspringen; und auf die gleiche Weise geht man mit der Taste „-“ zum vorhergehenden Programm zurück.",
+    "Eingabetaste ⏎ drücken, um die Endestunde abzulesen.",
+    "Am Schluss des Programmierens mehrere Male „ESC“ drücken, um auszuspringen und zum Hauptmenü zurückzukehren",
+  ],
+  EDIT_MELODY_NAMES: [
+    "Wählen Sie eine Melodie 1-8.",
+    "Nutzen Sie +/- zum Ändern der Buchstaben.",
+    "Zahlen können direkt getippt werden.",
+  ],
+};

@@ -1,0 +1,1 @@
+Bitte starte die Seite über einen lokalen Webserver (z. B. python -m http.server 5500) und öffne http://localhost:5500/index.html. Dadurch funktionieren die ES‑Modul‑Imports zuverlässig und du vermeidest Cross‑Origin‑Probleme, die beim Öffnen per file:// auftreten. (Siehe vorherige Nachricht mit Details.)

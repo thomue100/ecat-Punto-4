@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Punto4 - Flow & Display Visualizer</title>
+    <style>
+      :root {
+        --lcd-bg: #000;
+        --lcd-text: #0f0;
+        --lcd-border: #555;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1a1a1a;
+        color: #eee;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #fff;
+        border-bottom: 1px solid #444;
+        padding-bottom: 10px;
+      }
+      .controls {
+        position: sticky;
+        top: 0;
+        background: #1a1a1a;
+        padding: 10px 0;
+        z-index: 100;
+        margin-bottom: 20px;
+      }
+      button {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background-color: #388e3c;
+      }
+
+      .group-container {
+        margin-bottom: 40px;
+        border-left: 4px solid #2e7d32;
+        padding-left: 20px;
+      }
+      .group-title {
+        font-size: 1.2em;
+        color: #81c784;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* LCD Simulation */
+      .display-sim {
+        background-color: var(--lcd-bg);
+        border: 3px solid var(--lcd-border);
+        border-radius: 4px;
+        padding: 12px;
+        width: 280px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 15px;
+      }
+      .step-info {
+        font-size: 10px;
+        color: #666;
+        margin-bottom: 5px;
+        font-family: sans-serif;
+      }
+      .line {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 18px;
+        color: var(--lcd-text);
+        height: 1.2em;
+        white-space: pre;
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      }
+      .line.empty {
+        opacity: 0.3;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid #333;
+        margin: 20px 0;
+      }
+      .status-tag {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 10px;
+        background: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Punto4 Display-Simulator</h1>
+
+    <div class="controls">
+      <button onclick="runFullDisplayTest()">Alle Flows visualisieren</button>
+    </div>
+
+    <div id="test-output">
+      <p style="color: #888">
+        Klicke auf den Button, um alle Programmschritte zu laden...
+      </p>
+    </div>
+
+    <script type="module">
+      import { flows } from "./flows.js";
+
+      window.runFullDisplayTest = () => {
+        const container = document.getElementById("test-output");
+        container.innerHTML = "";
+
+        // Die 4 Hauptkategorien
+        const categories = ["W", "P", "B", "Z"];
+        // Die 3 Typen
+        const types = ["GLOCKEN", "MELODIEN", "DIENSTE"];
+
+        categories.forEach((cat) => {
+          types.forEach((type) => {
+            const configKey = `${cat}_${type}`;
+            let steps = [];
+
+            try {
+              steps = flows.START_PROGRAM_INPUT.getSteps(configKey);
+            } catch (e) {
+              console.error(`Fehler bei ${configKey}:`, e);
+              return;
+            }
+
+            const groupDiv = document.createElement("div");
+            groupDiv.className = "group-container";
+
+            groupDiv.innerHTML = `<div class="group-title">${configKey} <span class="status-tag">${steps.length} Schritte</span></div>`;
+
+            steps.forEach((step, index) => {
+              const displayDiv = document.createElement("div");
+              displayDiv.className = "display-sim";
+
+              // Simulation der showIf Logik (standardmäßig Dauer > 0 angenommen für Vorschau)
+              const isHiddenByDefault =
+                step.showIf && !step.showIf({ duration: "0" });
+              if (isHiddenByDefault) {
+                displayDiv.style.opacity = "0.4";
+              }
+
+              displayDiv.innerHTML = `
+                            <div class="step-info">SCHRITT ${index + 1}: ${step.id} ${isHiddenByDefault ? "(Bedingt)" : ""}</div>
+                            <div class="line">${step.label}</div>
+                            <div class="line ${!step.subLabel ? "empty" : ""}">${step.subLabel || " "}</div>
+                        `;
+              groupDiv.appendChild(displayDiv);
+            });
+
+            container.appendChild(groupDiv);
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
