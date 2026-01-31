@@ -526,3 +526,40 @@ body {
   line-height: 1;
   opacity: 0.8;
 }
+@media (max-width: 480px) {
+  .container {
+    /* Verkleinert das gesamte Interface auf 85% der Originalgröße */
+    transform: scale(0.85);
+    transform-origin: top center;
+    margin-top: 0;
+  }
+
+  body {
+    padding: 5px; /* Platz sparen */
+    overflow-x: hidden; /* Verhindert horizontales Wackeln */
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    gap: 10px; /* Weniger Abstand zwischen den Sektionen */
+  }
+
+  .display {
+    padding: 10px;
+    border-width: 6px; /* Dünnerer Rahmen spart Platz */
+  }
+
+  #menuList {
+    font-size: 18px; /* Kleinerer Text auf dem LCD */
+    width: 18ch; /* Weniger Zeichenbreite */
+  }
+
+  .grid,
+  .function-grid {
+    gap: 6px; /* Tasten rücken näher zusammen */
+  }
+
+  .btn {
+    font-size: 18px; /* Tastenbeschriftung kleiner */
+  }
+}
