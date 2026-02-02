@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("4/7 TURMUHR KORRIG.", async ({ page }) => {
-  test.slow();
+  //test.slow();
 
   await page.goto("http://127.0.0.1:5500/");
 

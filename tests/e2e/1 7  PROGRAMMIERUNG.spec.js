@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 1/5) WOECHENTLICH 1-4", async ({
   page,
 }) => {
-  test.slow();
+  //test.slow();
   await page.locator("body").click();
   await page.goto("http://localhost:5500/");
   await page.getByRole("button", { name: "1", exact: true }).click();
@@ -191,7 +191,7 @@ test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 2/5) PERIODISCH 1-4", async ({
   page,
 }) => {
   //test.slow(); für headless = true -Tests, damit sie nicht timeouten
-  test.slow();
+  //test.slow();
   await page.goto("http://localhost:5500/index.html");
   await page.getByRole("button", { name: "1", exact: true }).click();
   await page.getByRole("button", { name: "2", exact: true }).click();
@@ -392,7 +392,7 @@ test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 2/5) PERIODISCH 1-4", async ({
 test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 3/5) BESONDERE 1-4", async ({
   page,
 }) => {
-  test.slow();
+  //test.slow();
   await page.goto("http://localhost:5500/");
   await page.getByRole("button", { name: "1", exact: true }).click();
   await page.getByRole("button", { name: "2", exact: true }).click();
