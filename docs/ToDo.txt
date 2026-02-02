@@ -89,6 +89,7 @@ HAUPTMENUE
     Bestehende Tests ausbauen, insbesondere für Speicherlogik und Eingaben.
 
 12. Bei den Diensten wartet das ? hinter einer eingegebenen Zahl, besser wäre es, wenn die dann blinkt
+    Es sieht aus, als könne man bei den periodischen (?) Diensten manchmal auch zwei Dienste eingeben - prüfen!
 
 ## 📘 **Wichtig & begleitend (nicht vergessen!)**
 
