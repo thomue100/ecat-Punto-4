@@ -88,6 +88,8 @@ HAUPTMENUE
 11. **Tests erweitern**
     Bestehende Tests ausbauen, insbesondere für Speicherlogik und Eingaben.
 
+12. Bei den Diensten wartet das ? hinter einer eingegebenen Zahl, besser wäre es, wenn die dann blinkt
+
 ## 📘 **Wichtig & begleitend (nicht vergessen!)**
 
 * **Unbedingt die italienische Anleitung und das YouTube-Transkript lesen**
