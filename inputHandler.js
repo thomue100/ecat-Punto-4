@@ -42,6 +42,30 @@ const App = (() => {
       return; // Verhindert weitere Eingaben, solange Hilfe offen ist
     }
 
+    // 1. Login Modus
+    if (!state.isLoggedIn) {
+      if (/^[0-9]$/.test(k)) {
+        if (state.loginInput.length < 4) {
+          state.loginInput += k;
+        }
+      } else if (k === "Backspace") {
+        state.loginInput = state.loginInput.slice(0, -1);
+      } else if (k === KEYS.ENTER) {
+        if (state.loginInput === "123") {
+          state.isLoggedIn = true;
+          state.loginInput = "";
+          // --- RESET DER NAVIGATION ---
+          state.stack = [menuData[0]]; // Zurück zum Hauptmenü-Root
+          state.index = 0; // Erster Eintrag
+        } else {
+          state.loginInput = ""; // Reset bei falschem Code
+        }
+      }
+      // WICHTIG: Wenn nicht eingeloggt, hier abbrechen!
+      Renderer.render(state);
+      return;
+    }
+
     // 1. Globale STOP-Funktion (reagiert immer)
     if (k === "Stop") {
       AudioPlayer.stop();
@@ -109,26 +133,6 @@ const App = (() => {
       return;
     }
 
-    // 1. Login Modus
-    if (!state.isLoggedIn) {
-      if (/^[0-9]$/.test(k)) {
-        if (state.loginInput.length < 4) {
-          state.loginInput += k;
-        }
-      } else if (k === "Backspace") {
-        state.loginInput = state.loginInput.slice(0, -1);
-      } else if (k === KEYS.ENTER) {
-        if (state.loginInput === "123") {
-          state.isLoggedIn = true;
-          state.loginInput = "";
-          // --- RESET DER NAVIGATION ---
-          state.stack = [menuData[0]]; // Zurück zum Hauptmenü-Root
-          state.index = 0; // Erster Eintrag
-        } else {
-          state.loginInput = ""; // Reset bei falschem Code
-        }
-      }
-    }
     // 2. Aktive Modi Routing (nur wenn eingeloggt und Hilfe aus)
     else if (state.dateTimeEditMode) DateTimeHandler.handle(state, k, KEYS);
     else if (state.summerTimeEditMode) SummerTimeHandler.handle(state, k, KEYS);
