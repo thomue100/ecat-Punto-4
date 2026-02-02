@@ -5,41 +5,41 @@ test("test", async ({ page }) => {
   await page.getByRole("button", { name: "3", exact: true }).click();
   await page.getByRole("button", { name: "↵" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 1/7) PROGRAMMIERUNG",
+    "HAUPTMENUE 1/7) PROGRAMMIERUNG",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 2/7) UHR KORRIGIEREN",
+    "HAUPTMENUE 2/7) UHR KORRIGIEREN",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 3/7) SEK. KORRIGIEREN",
+    "HAUPTMENUE 3/7) SEK. KORRIGIEREN",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 4/7) TURMUHR KORRIG.",
+    "HAUPTMENUE 4/7) TURMUHR KORRIG.",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 5/7) SOMMERZEIT",
+    "HAUPTMENUE 5/7) SOMMERZEIT",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 6/7) MELOD. SPEICHERN",
+    "HAUPTMENUE 6/7) MELOD. SPEICHERN",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 7/7) NAME DER MELODI.",
+    "HAUPTMENUE 7/7) NAME DER MELODI.",
   );
   await page.getByRole("button", { name: "+" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 1/7) PROGRAMMIERUNG",
+    "HAUPTMENUE 1/7) PROGRAMMIERUNG",
   );
   await page.getByRole("button", { name: "−" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 7/7) NAME DER MELODI.",
+    "HAUPTMENUE 7/7) NAME DER MELODI.",
   );
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 7/7) NAME DER MELODI.",
+    "HAUPTMENUE 7/7) NAME DER MELODI.",
   );
 });

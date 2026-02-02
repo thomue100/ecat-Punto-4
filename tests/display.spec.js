@@ -15,7 +15,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
 
     let lines = page.locator("#menuList .lcd-line");
     await expect(lines).toHaveText([
-      "HAUPTMENU            ",
+      "HAUPTMENUE           ",
       "1/7) PROGRAMMIERUNG  ",
     ]);
 
@@ -121,7 +121,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
 
     let lines = page.locator("#menuList .lcd-line");
     await expect(lines).toHaveText([
-      "HAUPTMENU            ",
+      "HAUPTMENUE           ",
       "1/7) PROGRAMMIERUNG  ",
     ]);
 
@@ -235,7 +235,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
 
     let lines = page.locator("#menuList .lcd-line");
     await expect(lines).toHaveText([
-      "HAUPTMENU            ",
+      "HAUPTMENUE           ",
       "1/7) PROGRAMMIERUNG  ",
     ]);
 
@@ -339,7 +339,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
 
     let lines = page.locator("#menuList .lcd-line");
     await expect(lines).toHaveText([
-      "HAUPTMENU            ",
+      "HAUPTMENUE           ",
       "1/7) PROGRAMMIERUNG  ",
     ]);
 
@@ -764,7 +764,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
     await page.getByRole("button", { name: "+" }).click();
     await page.getByRole("button", { name: "+" }).click();
     await expect(page.getByLabel("Menüeinträge")).toContainText(
-      "HAUPTMENU 4/7) TURMUHR KORRIG.",
+      "HAUPTMENUE 4/7) TURMUHR KORRIG.",
     );
     await page.getByRole("button", { name: "↵" }).click();
     await page.getByRole("button", { name: "1", exact: true }).click();
@@ -776,7 +776,7 @@ test.describe("Ecat Punto 4 Trainer - Display Tests", () => {
     );
     await page.getByRole("button", { name: "↵" }).click();
     await expect(page.getByLabel("Menüeinträge")).toContainText(
-      "HAUPTMENU 1/7) PROGRAMMIERUNG",
+      "HAUPTMENUE 1/7) PROGRAMMIERUNG",
     );
   });
 

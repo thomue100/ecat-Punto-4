@@ -7,7 +7,7 @@ test("test", async ({ page }) => {
   await page.getByRole("button", { name: "3", exact: true }).click();
   await page.getByRole("button", { name: "↵" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 1/7) PROGRAMMIERUNG",
+    "HAUPTMENUE 1/7) PROGRAMMIERUNG",
   );
   await page.getByRole("button", { name: "↵" }).click();
   await expect(page.getByLabel("Menüeinträge")).toContainText(

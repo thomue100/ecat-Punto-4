@@ -7,8 +7,12 @@ export default defineConfig({
   reporter: "html",
 
   use: {
-    headless: true, // 🔴 erzwingt Headless global
+    headless: false, // 🔴 erzwingt Headless global
     trace: "on-first-retry", // optional, aber sinnvoll
+
+    launchOptions: {
+      slowMo: 300, // 300ms nach jeder Aktion
+    },
   },
 
   projects: [

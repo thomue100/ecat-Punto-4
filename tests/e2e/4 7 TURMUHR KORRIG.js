@@ -37,6 +37,6 @@ test("4/7 TURMUHR KORRIG.", async ({ page }) => {
 
   // Rückkehr zum Hauptmenü prüfen
   await expect(page.getByLabel("Menüeinträge")).toContainText(
-    "HAUPTMENU 1/7) PROGRAMMIERUNG",
+    "HAUPTMENUE 1/7) PROGRAMMIERUNG",
   );
 });

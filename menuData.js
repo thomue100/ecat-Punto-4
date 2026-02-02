@@ -1,8 +1,8 @@
 // js/menuData.js
 export const menuData = [
   {
-    name: "HAUPTMENU",
-    displayname: "HAUPTMENU",
+    name: "HAUPTMENUE",
+    displayname: "HAUPTMENUE",
     submenu: [
       {
         name: "1/7) PROGRAMMIERUNG",
