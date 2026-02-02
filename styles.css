@@ -86,7 +86,7 @@ body {
   text-transform: uppercase;
   min-height: 64px;
   /* Garantiert Platz für 21 Zeichen durch 'ch' Einheit */
-  width: 21ch;
+  width: 22ch;
   max-width: 100%;
   box-sizing: border-box;
   margin: 0;
