@@ -74,3 +74,10 @@ HAUPTMENUE
   * in der deutschen Anleitung fehlen
   * oder missverständlich formuliert sind
     → Erkenntnisse direkt in Logik, Texte und Tests einfließen lassen.
+
+*** Offene Fragen ***
+
+1.) In der Bedienungsanleitung finden sich keinerlei Hinweise darauf, wie die punto 4 für den Einsatz vorbereitet wird.
+Wo kann das Standardpasswort geändert werden?
+Wie können die Funktions- und Handtasten vorbelegt werden?
+Wie werden die Melodien 5-8 hochgeladen? Vermutlich über den DB9-Stecker. 

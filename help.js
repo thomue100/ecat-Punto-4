@@ -1,7 +1,7 @@
 export const helpData = {
   DEFAULT: [
     "Was ist die PUNTO 4?",
-    "Die PUNTO 4 ist eine zentrale Steuereinheit, die zur Steuerung verschiedener Kanäle und Signale wie Kirchenglocken, Melodien oder Turmuhren dient. Sie ermöglicht sowohl die automatische Ausführung gespeicherter Programme als auch manuelle Befehle über Funktionstasten. Mit bis zu 99 verfügbaren Speicherplätzen bietet sie eine flexible Lösung für komplexe Zeitsteuerungsaufgaben.",
+    "Die PUNTO 4 ist eine zentrale Steuereinheit, die u.a. zur Steuerung von Kirchenglocken und Turmuhren dient. Sie ermöglicht sowohl die automatische Ausführung gespeicherter Programme als auch manuelle Befehle über Funktionstasten. Mit bis zu 99 verfügbaren Speicherplätzen bietet sie eine flexible Lösung für komplexe Zeitsteuerungsaufgaben.",
     "Die Programmiermöglichkeiten",
     "Die PUNTO 4 unterscheidet zwischen verschiedenen Programmtypen, um unterschiedlichste zeitliche Anforderungen abzudecken:",
     "Wöchentlich: Dies ist das Standardprogramm für Ereignisse, die sich jede Woche an denselben Tagen und zur selben Uhrzeit wiederholen (z. B. tägliches Läuten).",
