@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 1/5) WOECHENTLICH 1-4", async ({
   page,
 }) => {
-  //test.slow();
+  test.slow();
   await page.locator("body").click();
   await page.goto("http://localhost:5500/");
   await page.getByRole("button", { name: "1", exact: true }).click();
@@ -191,7 +191,7 @@ test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 2/5) PERIODISCH 1-4", async ({
   page,
 }) => {
   //test.slow(); für headless = true -Tests, damit sie nicht timeouten
-  //test.slow();
+  test.slow();
   await page.goto("http://localhost:5500/index.html");
   await page.getByRole("button", { name: "1", exact: true }).click();
   await page.getByRole("button", { name: "2", exact: true }).click();
@@ -392,7 +392,7 @@ test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 2/5) PERIODISCH 1-4", async ({
 test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 3/5) BESONDERE 1-4", async ({
   page,
 }) => {
-  //test.slow();
+  test.slow();
   await page.goto("http://localhost:5500/");
   await page.getByRole("button", { name: "1", exact: true }).click();
   await page.getByRole("button", { name: "2", exact: true }).click();
@@ -736,4 +736,221 @@ test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 4/5) ZYKLISCH 1-4", async ({
   await expect(page.getByLabel("Menüeinträge")).toContainText(
     "Z05 DIENSTE: ?_ WAEHLE (1..2)",
   );
+});
+
+test("1/7) PROGRAMMIERUNG 1/3) EINGEBEN 4/5) UNTERDRUECKEN 1-4", async ({
+  page,
+}) => {
+  test.slow();
+  await page.goto("http://127.0.0.1:5500/");
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "3", exact: true }).click();
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "+" }).click();
+  await page.getByRole("button", { name: "+" }).click();
+  await page.getByRole("button", { name: "+" }).click();
+  await page.getByRole("button", { name: "+" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE PROGRAMM. 5/5) UNTERDRUECKEN",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 1/4) GLOCKEN",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "3", exact: true }).click();
+  await page.getByRole("button", { name: "4", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 GLOCKEN: 1234 WAEHLE (1..4)",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 BEGINNSTUN.:11:1100:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 ENDESTUNDE:22:22 00:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 BEGINNDAT.:11:11 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 ENDEDATUM :12:12 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "0" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U01 ETAGE:0 1-MON...7-SON 0-ALLE",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "ESC" }).click();
+  await page.getByRole("button", { name: "+" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 2/4) MELODIEN",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "3", exact: true }).click();
+  await page.getByRole("button", { name: "4", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 MELODIEN: 1234 WAEHLE (1..4)",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 BEGINNSTUN.:11:1100:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 ENDESTUNDE:12:12 00:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 BEGINNDAT.:11:11 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 ENDEDATUM :12:12 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "0" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U02 ETAGE:0 1-MON...7-SON 0-ALLE",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "ESC" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 2/4) MELODIEN",
+  );
+  await page.getByRole("button", { name: "+" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 3/4) STUNDENSCHLAGEN",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U03 BEGINNSTUN.:11:1100:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U03 ENDESTUNDE:12:12 00:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U03 BEGINNDAT.:11:11 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U03 ENDEDATUM :12:12 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "0" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U03 ETAGE:0 1-MON...7-SON 0-ALLE",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "ESC" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 3/4) STUNDENSCHLAGEN",
+  );
+  await page.getByRole("button", { name: "+" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "EINGABE UNTERDRUECK. 4/4) DIENSTE",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText("U04 DIENSTE:");
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U04 BEGINNSTUN.:11:1100:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U04 ENDESTUNDE:12:12 00:MM-FORMAT",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U04 BEGINNDAT.:11:11 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await page.getByRole("button", { name: "1", exact: true }).click();
+  await page.getByRole("button", { name: "2", exact: true }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U04 ENDEDATUM :12:12 FORMAT TT-MM",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await page.getByRole("button", { name: "0" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText(
+    "U04 ETAGE:0 1-MON...7-SON 0-ALLE",
+  );
+  await page.getByRole("button", { name: "↵" }).click();
+  await expect(page.getByLabel("Menüeinträge")).toContainText("U05 DIENSTE:");
 });

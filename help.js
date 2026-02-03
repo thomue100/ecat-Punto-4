@@ -1,7 +1,7 @@
 export const helpData = {
   DEFAULT: [
     "Was ist die PUNTO 4?",
-    "Die PUNTO 4 ist eine zentrale Steuereinheit für die Zeit- und Signalsteuerung, die zur Steuerung verschiedener Kanäle und Signale wie Kirchenglocken, Melodien oder Turmuhren dient. Sie ermöglicht sowohl die automatische Ausführung gespeicherter Programme als auch manuelle Befehle über Funktionstasten. Mit bis zu 99 verfügbaren Speicherplätzen bietet sie eine flexible Lösung für komplexe Zeitsteuerungsaufgaben.",
+    "Die PUNTO 4 ist eine zentrale Steuereinheit, die zur Steuerung verschiedener Kanäle und Signale wie Kirchenglocken, Melodien oder Turmuhren dient. Sie ermöglicht sowohl die automatische Ausführung gespeicherter Programme als auch manuelle Befehle über Funktionstasten. Mit bis zu 99 verfügbaren Speicherplätzen bietet sie eine flexible Lösung für komplexe Zeitsteuerungsaufgaben.",
     "Die Programmiermöglichkeiten",
     "Die PUNTO 4 unterscheidet zwischen verschiedenen Programmtypen, um unterschiedlichste zeitliche Anforderungen abzudecken:",
     "Wöchentlich: Dies ist das Standardprogramm für Ereignisse, die sich jede Woche an denselben Tagen und zur selben Uhrzeit wiederholen (z. B. tägliches Läuten).",
@@ -20,7 +20,7 @@ export const helpData = {
     "Periodisch bezieht sich auf den Kalenderzeitraum. Sie legen fest, dass ein Programm z. B. nur vom 1. Dezember bis zum 24. Dezember aktiv ist.",
     "Zyklisch bezieht sich auf die Häufigkeit innerhalb eines Tages. Hier programmieren Sie Intervalle, in denen ein Signal immer wieder kehrt (Wiederholungsrate).",
     "Das grundlegende Programmiermuster",
-    "Jede Programmierung in der PUNTO 4 folgt einer logischen Abfolge, die den Nutzer Schritt für Schritt durch die Eingabe führt:",
+    "Jede Programmierung in der PUNTO 4 folgt einer logischen Abfolge. Sie werden Schritt für Schritt durch die Eingabe grgeführt:",
     "Funktionswahl: Sie wählen im Hauptmenü unter 'Programmierung' den Punkt 'Eingeben.'",
     "Typenwahl: Entscheidung für einen Modus (z. B. Wöchentlich oder Periodisch).",
     "Aktionswahl: Auswahl des Kanals (z. B. Glocke 1 oder Melodie 2).",
