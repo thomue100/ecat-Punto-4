@@ -68,12 +68,15 @@ HAUPTMENUE
 
 ## 📘 **Wichtig & begleitend (nicht vergessen!)**
 
-* **Unbedingt die italienische Anleitung und das YouTube-Transkript lesen**
-  Dort finden sich offenbar zusätzliche oder präzisere Informationen, die
+***Unbedingt die italienische Anleitung und das YouTube-Transkript lesen** Dort finden sich offenbar 
+zusätzliche oder präzisere Informationen, die in der deutschen Anleitung fehlen oder missverständlich
+formuliert sind → Erkenntnisse direkt in Logik, Texte und Tests einfließen lassen:
 
-  * in der deutschen Anleitung fehlen
-  * oder missverständlich formuliert sind
-    → Erkenntnisse direkt in Logik, Texte und Tests einfließen lassen.
+- Bei der Programmierung dürfen bei den Tagen mehrere ausgewählt werden
+- Vielleicht darf aber nur eine Melodie ausgewählt werden?
+- Der blinkende Block-Cursor steht vermutlich immer hinter der einzugebenden Zahl, auch wenn man nur eine 
+  oder zwei Zahlen eingeben kann.
+
 
 *** Offene Fragen ***
 
