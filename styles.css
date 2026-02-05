@@ -1,5 +1,5 @@
 :root {
-  --bg: #0f172a;
+  --bg: #334155;
   --panel: #1e293b;
   --lcd-bg: #8ba894;
   --lcd-text: #1a2e1a;
@@ -25,9 +25,10 @@ body {
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  transition: padding-right 0.3s ease; /* Sanfter Übergang */
+  transition: padding-right 0.3s ease;
 }
 
+/* ================= Layout ================= */
 .container {
   margin: auto;
   width: min(1100px, 98vw);
@@ -36,6 +37,7 @@ body {
   grid-template-areas:
     "disp key"
     "func key";
+  grid-template-rows: auto 1fr; /* ensures bottom alignment */
   gap: 32px;
   align-items: start;
 }
@@ -47,436 +49,65 @@ body {
   }
 }
 
+/* ================= Display ================= */
 .display {
   grid-area: disp;
-  background: #000; /* Tiefschwarz für besseren Kontrast zum LCD */
-  /* Schmalerer, silbriger Rahmen mit Metallic-Effekt */
+  background: #000;
   border: 6px solid #b8bec9;
   border-image: linear-gradient(to bottom, #e2e8f0, #94a3b8, #cbd5e1) 1;
-  border-radius: 4px; /* Flacherer Radius für technischeren Look */
+  border-radius: 4px;
   padding: 16px;
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.5),
     inset 0 0 5px rgba(0, 0, 0, 0.8);
-
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: relative;
-  overflow: hidden; /* Verhindert Ausbrechen auf Mobile */
-}
-
-.lcd-line {
-  white-space: pre;
-  display: block;
-  min-height: 1.2em;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 0.75rem;
+  align-items: start;
+  overflow: hidden;
+  container-type: inline-size;
 }
 
 #menuList {
+  grid-column: 2;
+  grid-row: 1;
   background: var(--lcd-bg);
   color: var(--lcd-text);
-  font-family: "Courier New", Courier, monospace;
-  /* Dynamische Schriftgröße: Passt sich der Screenbreite an */
-  font-size: clamp(14px, 4.5vw, 24px);
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
   font-weight: bold;
-  padding: 10px;
-  border-radius: 2px;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
   line-height: 1.2;
   text-transform: uppercase;
-  min-height: 64px;
-  /* Garantiert Platz für 21 Zeichen durch 'ch' Einheit */
-  width: 23ch;
-  max-width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  list-style: none;
   letter-spacing: 0.5px;
+  max-inline-size: 23ch;
+  inline-size: 100%;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  container-type: inline-size;
+  --base-fs: 32px;
+  font-size: var(--base-fs);
 }
 
-.function-panel {
-  grid-area: func;
-  background: var(--panel-dark);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.function-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-}
-
-/* Vereinheitlichte Button-Basis für alle Tasten (Keypad & Funktionstasten) */
-.btn,
-.f-btn {
-  border: 0;
-  border-radius: 10px;
-  aspect-ratio: 1 / 1;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Plastischer Look & Wackel-Effekt Vorbereitung */
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    inset 0 -3px 0 rgba(0, 0, 0, 0.2),
-    0 4px 6px rgba(0, 0, 0, 0.3);
-  transition:
-    transform 0.05s,
-    filter 0.1s,
-    box-shadow 0.05s;
-}
-
-/* Der "Wackel"/Drück-Effekt für absolut alle Buttons */
-.btn:active,
-.f-btn:active {
-  transform: translateY(2px);
-  filter: brightness(0.9);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-    0 2px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Keypad spezifisch */
-.keypad {
-  grid-area: key;
-  background: var(--panel-dark);
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-}
-
-.btn {
-  background: var(--btn-mint);
-  color: var(--btn-text);
-  font-size: 24px;
-}
-
-.btn-special {
-  background: linear-gradient(135deg, var(--btn-red) 50%, var(--btn-mint) 50%);
-  font-size: 14px;
-  line-height: 1.1;
-  text-transform: lowercase;
-}
-
-.btn-enter {
-  font-size: 32px;
-}
-
-/* Funktionstasten spezifisch */
-.f-btn {
-  background: var(--btn-red);
-  color: var(--btn-text);
-  font-size: 14px;
-  position: relative;
-}
-
-.stop-btn {
-  background: linear-gradient(135deg, var(--btn-red) 50%, var(--btn-mint) 50%);
-  text-transform: lowercase;
-}
-
-.led {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 7px;
-  height: 7px;
-  background: #4a1d1d;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.f-btn.active-led .led {
-  background: #ff3333;
-  box-shadow: 0 0 10px #ff0000;
-}
-
-.hand-btn {
-  font-size: 20px;
-}
-
-.empty-space,
-.empty-space-small {
-  visibility: hidden;
-}
-
-/* Der massive Block-Cursor für den Login */
-.cursor-block {
-  display: inline-block;
-  background-color: var(--lcd-text); /* Massiver dunkler Block */
-  color: var(--lcd-bg) !important; /* Heller Buchstabe/Stern im Block */
-  width: 1ch;
-  height: 1.2em;
-  line-height: 1.2;
-  vertical-align: middle;
-  text-align: center;
-  /* Verhindert, dass der Cursor "hüpft", falls das Zeichen schmaler ist */
-  font-family: inherit;
-  animation: blink-block 0.8s step-end infinite;
-}
-
-/* Das einfache blinkende Fragezeichen ohne Block */
-.cursor-question {
-  display: inline-block;
-  color: var(--lcd-text) !important;
-  width: 1ch;
-  animation: blink-simple 0.8s step-end infinite;
-}
-
-@keyframes blink-block {
-  0%,
-  100% {
-    background-color: var(--lcd-text);
-    color: var(--lcd-bg) !important;
-  }
-  50% {
-    /* In der Aus-Phase wird der Block transparent und die Textfarbe normal */
-    background-color: transparent;
-    color: inherit !important;
+@container (max-width: 23ch) {
+  #menuList {
+    font-size: calc(100cqi / 23);
   }
 }
 
-@keyframes blink-simple {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
 .model-badge {
+  grid-column: 1 / -1;
+  grid-row: 2;
   font-family: "Courier New", monospace;
   font-size: 12px;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 4px; /* Verbraucht fast keinen Platz */
   opacity: 0.6;
-}
-/* styles.css */
-
-/* Das Overlay verdeckt den gesamten Viewport */
-#helpOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.85); /* Halbdurchsichtiger Hintergrund */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px); /* Schicker Unschärfe-Effekt im Hintergrund */
-}
-
-/* Der Inhaltscontainer */
-.help-content {
-  background: #f8fafc;
-  color: #1e293b;
-  width: min(500px, 90%);
-  max-height: 80vh;
-  padding: 30px;
-  border-radius: 12px;
-  position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
-}
-
-#helpTitle {
-  margin-top: 0;
-  color: #334155;
-  font-family: sans-serif;
-}
-
-#helpList {
-  list-style: none;
-  padding: 0;
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-#helpList li {
-  margin-bottom: 12px;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 8px;
-}
-
-/* Das Schließkreuz */
-.close-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #e2e8f0;
-  border: none;
-  font-size: 28px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.close-button:hover {
-  background: #cbd5e1;
-}
-
-.help-footer {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #64748b;
-  text-align: center;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* Debug Overlay */
-#debugOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(15, 23, 42, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1100;
-  backdrop-filter: blur(8px);
-}
-
-.debug-content {
-  background: #1e293b;
-  color: #22c55e; /* Matrix-Grün für Technik-Look */
-  width: min(800px, 95%);
-  max-height: 85vh;
-  padding: 30px;
-  border-radius: 8px;
-  border: 1px solid #334155;
-  position: relative;
-  overflow-y: auto;
-  font-family: "Courier New", monospace;
-}
-
-.debug-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-#storageData {
-  background: #0f172a;
-  padding: 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #94a3b8;
-  overflow-x: auto;
-  border: 1px solid #334155;
-}
-
-.bell-monitor {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.bell-indicator {
-  padding: 5px 10px;
-  border: 1px solid #334155;
-  border-radius: 4px;
-  font-size: 11px;
-}
-
-.bell-indicator.active {
-  background: #166534;
-  color: #4ade80;
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-}
-
-.debug-tree {
-  list-style: none;
-  padding-left: 15px;
-  font-size: 13px;
-}
-
-.debug-item {
-  margin: 4px 0;
-  border-left: 1px solid #334155;
-  padding-left: 10px;
-}
-
-.debug-key {
-  color: #fbbf24; /* Bernstein-Gelb für Keys */
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-
-.debug-key::before {
-  content: "▶";
-  display: inline-block;
-  margin-right: 5px;
-  font-size: 10px;
-  transition: transform 0.2s;
-}
-
-.debug-item.open > .debug-key::before {
-  transform: rotate(90deg);
-}
-
-.debug-value {
-  color: #94a3b8;
-  margin-left: 10px;
-  word-break: break-all;
-}
-
-.debug-children {
-  display: none;
-}
-
-.debug-item.open > .debug-children {
-  display: block;
-}
-
-.type-string {
-  color: #22c55e;
-}
-.type-number {
-  color: #60a5fa;
-}
-
-/* Für das Dimmen der inaktiven Tasten bei sec. func. */
-.btn.btn-disabled,
-.f-btn.btn-disabled {
-  opacity: 0.2;
-  filter: grayscale(0.8);
-  pointer-events: none; /* Verhindert Klicks im Browser */
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none !important;
-}
-
-/* Sicherstellen, dass aktive LEDs trotz Dimmen sichtbar bleiben (optional) */
-.f-btn.btn-disabled .led {
-  opacity: 1;
 }
 
 #stecker-btn {
@@ -498,7 +129,6 @@ body {
   cursor: pointer;
   flex-shrink: 0; /* Verhindert das Stauchen */
 }
-
 /* Pins für Hochkant-Ausrichtung anpassen */
 #stecker-btn .pin-row {
   display: flex;
@@ -508,12 +138,10 @@ body {
   width: auto;
   margin: 0 2px;
 }
-
 #stecker-btn .pin-row.lower-row {
   height: 60%; /* Die zweite Reihe ist kürzer */
   width: auto;
 }
-
 #stecker-btn .pin {
   width: 8px;
   height: 8px;
@@ -522,7 +150,6 @@ body {
   border: 1px solid #666;
   box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.5);
 }
-
 #display-logo {
   align-self: flex-start; /* Schiebt das Logo nach ganz oben im Display-Rahmen */
   margin-top: 5px; /* Kleiner Abstand zum oberen Rand */
@@ -534,60 +161,390 @@ body {
   line-height: 1;
   opacity: 0.8;
 }
-@media (max-width: 480px) {
-  .container {
-    /* Verkleinert das gesamte Interface auf 85% der Originalgröße */
-    transform: scale(0.85);
-    transform-origin: top center;
-    margin-top: 0;
-  }
 
-  body {
-    padding: 5px; /* Platz sparen */
-    overflow-x: hidden; /* Verhindert horizontales Wackeln */
+/* ================= Keypad ================= */
+.keypad {
+  grid-area: key;
+  background: var(--panel-dark);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); /* match panels */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+/* ================= Function Panel ================= */
+.function-panel {
+  grid-area: func;
+  background: var(--panel-dark);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  align-self: end; /* bottom aligned to keypad */
+}
+
+.function-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+/* ================= Buttons ================= */
+.btn,
+.f-btn {
+  border: 0;
+  border-radius: 10px;
+  aspect-ratio: 1 / 1;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2),
+    0 4px 6px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.05s,
+    filter 0.1s,
+    box-shadow 0.05s;
+}
+
+.btn:active,
+.f-btn:active {
+  transform: translateY(2px);
+  filter: brightness(0.9);
+}
+
+.btn {
+  background: var(--btn-mint);
+  color: var(--btn-text);
+  font-size: 24px;
+}
+
+.btn-special {
+  background: linear-gradient(135deg, var(--btn-red) 50%, var(--btn-mint) 50%);
+  font-size: 14px;
+  line-height: 1.1;
+  text-transform: lowercase;
+}
+
+.btn-enter {
+  font-size: 32px;
+}
+
+.f-btn {
+  background: var(--btn-red);
+  color: var(--btn-text);
+  font-size: 14px;
+  position: relative;
+}
+
+.hand-btn {
+  font-size: 20px;
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, var(--btn-red) 50%, var(--btn-mint) 50%);
+}
+
+.led {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 7px;
+  height: 7px;
+  background: #4a1d1d;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.f-btn.active-led .led {
+  background: #ff3333;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+.empty-space,
+.empty-space-small {
+  visibility: hidden;
+}
+
+/* ================= Cursors ================= */
+
+/* Der massive Block-Cursor für den Login */
+.cursor-block {
+  display: inline-block;
+  background-color: var(--lcd-text); /* Massiver dunkler Block */
+  color: var(--lcd-bg) !important; /* Heller Buchstabe/Stern im Block */
+  width: 1ch;
+  height: 1.2em;
+  line-height: 1.2;
+  vertical-align: middle;
+  text-align: center;
+  /* Verhindert, dass der Cursor "hüpft", falls das Zeichen schmaler ist */
+  font-family: inherit;
+  animation: blink-block 0.8s step-end infinite;
+}
+/* Das einfache blinkende Fragezeichen ohne Block */
+.cursor-question {
+  display: inline-block;
+  color: var(--lcd-text) !important;
+  width: 1ch;
+  animation: blink-simple 0.8s step-end infinite;
+}
+@keyframes blink-block {
+  0%,
+  100% {
+    background-color: var(--lcd-text);
+    color: var(--lcd-bg) !important;
+  }
+  50% {
+    /* In der Aus-Phase wird der Block transparent und die Textfarbe normal */
+    background-color: transparent;
+    color: inherit !important;
   }
 }
+@keyframes blink-simple {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ================= States ================= */
+.btn.btn-disabled,
+.f-btn.btn-disabled {
+  opacity: 0.2;
+  filter: grayscale(0.8);
+  pointer-events: none;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.f-btn.btn-disabled .led {
+  opacity: 1;
+}
+
+/* ================= Responsive ================= */
 @media (max-width: 600px) {
   .container {
-    gap: 10px; /* Weniger Abstand zwischen den Sektionen */
+    gap: 10px;
   }
-
-  .display {
-    padding: 10px;
-    border-width: 6px; /* Dünnerer Rahmen spart Platz */
-  }
-
-  #menuList {
-    font-size: 18px; /* Kleinerer Text auf dem LCD */
-    width: 18ch; /* Weniger Zeichenbreite */
-  }
-
   .grid,
   .function-grid {
-    gap: 6px; /* Tasten rücken näher zusammen */
+    gap: 6px;
   }
-
   .btn {
-    font-size: 18px; /* Tastenbeschriftung kleiner */
+    font-size: 18px;
   }
 }
-/* --- Responsive Korrekturen --- */
 
-@media (max-width: 600px) {
-  .display {
-    padding: 8px;
-    border-width: 4px; /* Noch schmaler auf kleinen Screens */
-    gap: 8px;
+@media (max-width: 480px) {
+  .container {
+    transform: scale(0.85);
+    transform-origin: top center;
   }
+  body {
+    padding: 5px;
+    overflow-x: hidden;
+  }
+}
 
-  #menuList {
-    padding: 6px;
-    /* Verhindert, dass der Stecker das LCD zu stark quetscht */
-    flex-grow: 1;
-  }
+/* ================= Help Overlay ================= */
 
-  #stecker-btn {
-    width: 25px; /* Stecker etwas schmaler machen */
-    height: 70px;
-  }
+/* Das Overlay verdeckt den gesamten Viewport */
+#helpOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85); /* Halbdurchsichtiger Hintergrund */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Schicker Unschärfe-Effekt im Hintergrund */
+}
+/* Der Inhaltscontainer */
+.help-content {
+  background: #f8fafc;
+  color: #1e293b;
+  width: min(500px, 90%);
+  max-height: 80vh;
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+#helpTitle {
+  margin-top: 0;
+  color: #334155;
+  font-family: sans-serif;
+}
+#helpList {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+#helpList li {
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+/* Das Schließkreuz */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #e2e8f0;
+  border: none;
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.close-button:hover {
+  background: #cbd5e1;
+}
+.help-footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-align: center;
+}
+.hidden {
+  display: none !important;
+}
+
+/* ================= Debug Overlay ================= */
+
+#debugOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  backdrop-filter: blur(8px);
+}
+.debug-content {
+  background: #1e293b;
+  color: #22c55e; /* Matrix-Grün für Technik-Look */
+  width: min(800px, 95%);
+  max-height: 85vh;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  position: relative;
+  overflow-y: auto;
+  font-family: "Courier New", monospace;
+}
+.debug-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+#storageData {
+  background: #0f172a;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+  overflow-x: auto;
+  border: 1px solid #334155;
+}
+.bell-monitor {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bell-indicator {
+  padding: 5px 10px;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.bell-indicator.active {
+  background: #166534;
+  color: #4ade80;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+.debug-tree {
+  list-style: none;
+  padding-left: 15px;
+  font-size: 13px;
+}
+.debug-item {
+  margin: 4px 0;
+  border-left: 1px solid #334155;
+  padding-left: 10px;
+}
+.debug-key {
+  color: #fbbf24; /* Bernstein-Gelb für Keys */
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.debug-key::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+.debug-item.open > .debug-key::before {
+  transform: rotate(90deg);
+}
+.debug-value {
+  color: #94a3b8;
+  margin-left: 10px;
+  word-break: break-all;
+}
+.debug-children {
+  display: none;
+}
+.debug-item.open > .debug-children {
+  display: block;
+}
+.type-string {
+  color: #22c55e;
+}
+.type-number {
+  color: #60a5fa;
+}
+/* Für das Dimmen der inaktiven Tasten bei sec. func. */
+.btn.btn-disabled,
+.f-btn.btn-disabled {
+  opacity: 0.2;
+  filter: grayscale(0.8);
+  pointer-events: none; /* Verhindert Klicks im Browser */
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none !important;
+}
+/* Sicherstellen, dass aktive LEDs trotz Dimmen sichtbar bleiben (optional) */
+.f-btn.btn-disabled .led {
+  opacity: 1;
 }
