@@ -1,5 +1,5 @@
 :root {
-  --bg: #0f172a;
+  --bg: #334155;
   --panel: #1e293b;
   --lcd-bg: #8ba894;
   --lcd-text: #1a2e1a;
@@ -590,4 +590,62 @@ body {
     width: 25px; /* Stecker etwas schmaler machen */
     height: 70px;
   }
+}
+
+/* Die Section wird ein Größen-Container */
+.display {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 0.75rem;
+  align-items: start;
+  overflow: hidden;
+  container-type: inline-size; /* <— wichtig */
+}
+
+#stecker-btn {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Display in 2. Spalte */
+#menuList {
+  grid-column: 2;
+  grid-row: 1;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+
+  max-inline-size: 23ch;
+  inline-size: 100%;
+  box-sizing: border-box;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+
+  /* eigene Container-Außenwelt: */
+  container-type: inline-size; /* macht #menuList selbst zum Container */
+  --base-fs: 32px;
+  font-size: var(--base-fs);
+}
+
+/* Wenn #menuList schmaler ist als 23ch in Basis-Schriftgröße,
+   skalieren wir die Schrift so, dass 23ch in die verfügbare Containerbreite passen */
+@container (max-width: 23ch) {
+  #menuList {
+    font-size: calc(100cqi / 23); /* 100cqi = Container-Inline-Breite */
+  }
+}
+
+/* Badge */
+.model-badge {
+  grid-column: 1 / -1;
+  grid-row: 2;
 }
