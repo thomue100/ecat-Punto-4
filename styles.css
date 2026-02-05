@@ -652,6 +652,7 @@ body {
 
 @media (max-width: 480px) {
   #menuList {
-    max-inline-size: 16ch;
+    max-inline-size: 23 ch;
+    font-size: calc(100cqi / 18);
   }
 }
