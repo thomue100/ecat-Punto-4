@@ -652,6 +652,6 @@ body {
 
 @media (max-width: 480px) {
   #menuList {
-    max-inline-size: 18ch;
+    max-inline-size: 16ch;
   }
 }
